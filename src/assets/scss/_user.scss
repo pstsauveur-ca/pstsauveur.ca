@@ -1,1 +1,5 @@
 // Use this to write your custom SCSS
+
+nav.navbar ~ .content-wrapper .navbar-brand img {
+  filter: invert(100%);
+}
