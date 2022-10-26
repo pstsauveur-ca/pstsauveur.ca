@@ -11,8 +11,8 @@ var path = {
     colorcss: 'dev/assets/css/colors/',
     img: 'dev/assets/img/',
     fonts: 'dev/assets/fonts/',
-    media: 'dev/assets/media/',
-    php: 'dev/assets/php/'
+    // media: 'dev/assets/media/',
+    // php: 'dev/assets/php/'
   },
   dist: {
     html: 'dist/',
@@ -23,8 +23,8 @@ var path = {
     colorcss: 'dist/assets/css/colors/',
     img: 'dist/assets/img/',
     fonts: 'dist/assets/fonts/',
-    media: 'dist/assets/media/',
-    php: 'dist/assets/php/'
+    // media: 'dist/assets/media/',
+    // php: 'dist/assets/php/'
   },
   src: {
     html: ['src/**/*.html', '!src/partials/**/*.html', '!src/assets/php/**/*.html'],
@@ -38,8 +38,8 @@ var path = {
     vendorcss: 'src/assets/css/vendor/*.*',
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
-    media: 'src/assets/media/**/*.*',
-    php: 'src/assets/php/**/*.*'
+    // media: 'src/assets/media/**/*.*',
+    // php: 'src/assets/php/**/*.*'
   },
   watch: {
     html: ['src/**/*.html', '!src/assets/php/**/*.html'],
@@ -52,8 +52,8 @@ var path = {
     vendorcss: 'src/assets/css/vendor/*.*',
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
-    media: 'src/assets/media/**/*.*',
-    php: 'src/assets/php/',
+    // media: 'src/assets/media/**/*.*',
+    // php: 'src/assets/php/',
     user: 'src/assets/scss/_user-variables.scss'
   },
   clean: {
@@ -381,8 +381,6 @@ gulp.task('build:dev',
       'pluginsjs:dev',
       'themejs:dev',
       'fonts:dev',
-      'media:dev',
-      'php:dev',
       'image:dev'
       )
     )
@@ -400,8 +398,6 @@ gulp.task('build:dist',
       'pluginsjs:dist',
       'themejs:dist',
       'fonts:dist',
-      'media:dist',
-      'php:dist',
       'image:dist'
       )
     )
@@ -419,8 +415,6 @@ gulp.task('watch', function () {
     gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
     gulp.watch(path.watch.img, gulp.series('image:dist'));
     gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
-    gulp.watch(path.watch.media, gulp.series('media:dist'));
-    gulp.watch(path.watch.php, gulp.series('php:dist'));
     gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
 });
 
