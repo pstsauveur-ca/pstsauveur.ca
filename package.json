@@ -1,9 +1,9 @@
 {
-  "name": "sandbox",
-  "version": "3.2.1",
-  "description": "Sandbox - Modern & Multipurpose Bootstrap 5 Template",
-  "homepage": "https://sandbox.elemisthemes.com/",
-  "author": "elemis",
+  "name": "@pstsauveur-ca/pstsauveur.ca",
+  "version": "0.0.0",
+  "description": "Site web de la Paroisse de Saint-Sauveur",
+  "homepage": "https://pstsauveur.ca",
+  "author": "kareniel",
   "private": true,
   "scripts": {
     "start": "gulp serve",
