@@ -8,8 +8,7 @@
 
 <body>
 	<div class="content-wrapper">
-		@@include('_nav.html')
-		<!-- /header -->
+		@@include('_header.html')
 		<section class="wrapper bg-dark">
 			<div class="swiper-container swiper-thumbs-container swiper-fullscreen nav-dark" data-margin="0" data-autoplay="false" data-autoplaytime="7000" data-nav="false" data-dots="false" data-items="1" data-thumbs="false">
 			  <div class="swiper">
@@ -89,12 +88,7 @@
 		<!-- /.container -->
 	</section>
 	<!-- /section -->
-	<footer class="bg-dark text-inverse">
-		<div class="container py-13 py-md-15">
-		@@include('_footer3-alt-widgets.html')
-		</div>
-		<!-- /.container -->
-	</footer>
+	@@include('_footer.html')
 	@@include('_page-progress.html')
 	@@include('_scripts.html')
 </body>
