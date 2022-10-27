@@ -1,0 +1,73 @@
+
+<div class="row">
+  <div class="col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+    <h2 class="display-4 mb-3 text-center">Envoies-nous un message</h2>
+    <p class="lead text-center mb-10">Prends contact avec nous à partir de ce formulaire et nous te répondrons sous peu.</p>
+    <form class="contact-form needs-validation" name="contact" netlify>
+      <div class="messages"></div>
+      <div class="row gx-4">
+        <div class="col-md-6">
+          <div class="form-floating mb-4">
+            <input id="form_name" type="text" name="name" class="form-control" placeholder="Jean" required>
+            <label for="form_name">Prénom *</label>
+            <div class="valid-feedback">
+              C'est bon!
+            </div>
+            <div class="invalid-feedback">
+              Écris-nous s'il-te-plaît ton prénom.
+            </div>
+          </div>
+        </div>
+        <!-- /column -->
+        <div class="col-md-6">
+          <div class="form-floating mb-4">
+            <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Baptiste" required>
+            <label for="form_lastname">Nom de famille *</label>
+            <div class="valid-feedback">
+              C'est bon!
+            </div>
+            <div class="invalid-feedback">
+              Écris-nous s'il-te-plaît ton nom de famille.
+            </div>
+          </div>
+        </div>
+        <!-- /column -->
+        <div class="col-md-12">
+          <div class="form-floating mb-4">
+            <input id="form_email" type="email" name="email" class="form-control" placeholder="jane.doe@example.com" required>
+            <label for="form_email">Courriel *</label>
+            <div class="valid-feedback">
+              C'est bon!
+            </div>
+            <div class="invalid-feedback">
+              Fournis s'il-te-plaît une addresse courriel valide.
+            </div>
+          </div>
+        </div>
+        <!-- /column -->
+        <div class="col-12">
+          <div class="form-floating mb-4">
+            <textarea id="form_message" name="message" class="form-control" placeholder="Your message" style="height: 150px" required></textarea>
+            <label for="form_message">Message *</label>
+            <div class="valid-feedback">
+              C'est bon!
+            </div>
+            <div class="invalid-feedback">
+              Écris-nous s'il-te-plaît ton message.
+            </div>
+          </div>
+        </div>
+        <!-- /column -->
+        <div class="col-12 text-center">
+          <input type="submit" class="btn btn-primary rounded-pill btn-send mb-3" value="Envoyer le message">
+          <p class="text-muted"><strong>*</strong> Ces champs sont requis.</p>
+        </div>
+        <!-- /column -->
+      </div>
+      <!-- /.row -->
+    </form>
+    <!-- /form -->
+  </div>
+  <!-- /column -->
+</div>
+<!-- /.row -->
