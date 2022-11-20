@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	@@include('_head.html')
+</head>
+<body>
+	<div class="content-wrapper">
+		@@include('_header.html')
+		<section class="wrapper bg-primary text-white">
+			<div class="container pt-17 pb-20 pt-md-19 pb-md-17 text-center">
+				<div class="row">
+					<div class="col-lg-8 mx-auto">
+						<h1 class="display-1 mb-3 text-white">Baptême</h1>
+					</div>
+					<!-- /column -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container -->
+		</section>
+		<!-- /section -->
+    <section class="wrapper bg-light">
+      <div class="container py-14 py-md-16">
+        <div class="row gx-lg-8 gx-xl-12 gy-10">
+					<div class="col-lg-6 order-lg-2 position-relative">
+						<figure class="mb-0">
+							<img src="../assets/img/photos/baptism-of-christ-antoine-coypel.png" alt="">
+						</figure>
+					</div>
+          <div class="col-lg-6">
+						<h2 class="display-3 mb-3">Le baptême de votre enfant</h2>
+            
+            <p>Pour vous inscrire, veuillez compléter le formulaire suivant.</p>
+
+						<h3 class="display-5 mb-3">Informations de l'enfant</h3>
+
+            <form class="contact-form needs-validation" method="post" action="./assets/php/contact.php" novalidate>
+              <div class="messages"></div>
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Jane" required>
+                    <label for="form_name">Prénom *</label>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter your first name.
+                    </div>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Doe" required>
+                    <label for="form_lastname">Autres prénoms (s'il y a lieu) *</label>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter your last name.
+                    </div>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_email" type="email" name="email" class="form-control" placeholder="jane.doe@example.com" required>
+                    <label for="form_email">Nom *</label>
+                    <div class="valid-feedback">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                      Please provide a valid email address.
+                    </div>
+                  </div>
+                </div> 
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-select-wrapper mb-4">
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-3">
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="radio" value="garcon" name="sexe" id="garcon" required>
+                    <label class="form-check-label" for="garcon">
+                      Garçon
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-3">
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="radio" value="fille" name="sexe" id="fille" required>
+                    <label class="form-check-label" for="fille">
+                      Fille
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-12">
+                  <input type="submit" class="btn btn-primary btn-send mb-3" value="S'inscrire">
+                  <p class="text-muted"><strong>*</strong> These fields are required.</p>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+            </form>
+            <!-- /form -->
+
+
+          </div>
+          <!--/column -->
+        </div>
+        <!--/.row -->
+      </div>
+      <!-- /.container -->
+    </section>
+		<!-- /section -->
+	</div>
+	<!-- /.content-wrapper -->
+	@@include('_footer.html')
+	@@include('_page-progress.html')
+	@@include('_scripts.html')
+</body>
+</html>
