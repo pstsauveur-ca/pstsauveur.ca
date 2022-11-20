@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "annonces",
+  "info": {
+    "singularName": "annonce",
+    "pluralName": "annonces",
+    "displayName": "Annonces"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Texte": {
+      "type": "text"
+    }
+  }
+}
