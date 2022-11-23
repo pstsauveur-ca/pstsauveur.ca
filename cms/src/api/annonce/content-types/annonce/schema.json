@@ -4,7 +4,8 @@
   "info": {
     "singularName": "annonce",
     "pluralName": "annonces",
-    "displayName": "Annonces"
+    "displayName": "Annonces",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,6 +14,20 @@
   "attributes": {
     "Texte": {
       "type": "text"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Date": {
+      "type": "date"
+    },
+    "Titre": {
+      "type": "string"
     }
   }
 }
