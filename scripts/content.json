@@ -1,0 +1,15 @@
+{
+  "annonces": [
+    {
+      "id": 1,
+      "attributes": {
+        "Texte": "Giorgia Fumanti Magie de Noël Avec la participation de la chorale l'Académie Lafontaine et le Choeur des Jeunes de St-Sauveur\nSamedi le 17 décembre à 20h\nCoût: 45$\nBillets en vente au Presbytère\n450-227-2423\n",
+        "Date": "2022-11-27",
+        "Titre": "Spectacle à l'église",
+        "createdAt": "2022-11-27T16:22:25.361Z",
+        "updatedAt": "2022-11-27T16:25:58.916Z",
+        "publishedAt": "2022-11-27T16:25:58.909Z"
+      }
+    }
+  ]
+}
