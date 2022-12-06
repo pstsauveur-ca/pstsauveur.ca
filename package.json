@@ -5,16 +5,26 @@
   "homepage": "https://pstsauveur.ca",
   "author": "kareniel",
   "private": true,
+  "engines": {
+    "node": ">=18.12.1"
+  },
   "scripts": {
     "start": "gulp serve",
-    "build": "gulp build:dist"
+    "build": "gulp build:dist",
+    "fetch-content": "ts-node scripts/fetch-content.ts"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.2",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "autoprefixer": "10.4.5",
     "bootstrap": "^5.2.0",
     "browser-sync": "~2.27.7",
     "del": "~6.0.0",
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "gulp": "~4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-beautify": "^3.0.0",
@@ -36,6 +46,7 @@
     "gulp-uglify": "~3.0.2",
     "imagemin-jpeg-recompress": "~7.0.0",
     "imagemin-pngquant": "~9.0.2",
-    "sass": "1.49.0"
+    "sass": "1.49.0",
+    "ts-node": "^10.9.1"
   }
 }
