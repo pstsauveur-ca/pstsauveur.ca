@@ -12,7 +12,7 @@ var path = {
     img: 'dev/assets/img/',
     fonts: 'dev/assets/fonts/',
     // media: 'dev/assets/media/',
-    // php: 'dev/assets/php/'
+    // php: 'dev/assets/php/',
   },
   dist: {
     html: 'dist/',
@@ -23,6 +23,7 @@ var path = {
     colorcss: 'dist/assets/css/colors/',
     img: 'dist/assets/img/',
     fonts: 'dist/assets/fonts/',
+    txt: 'dist/',
     // media: 'dist/assets/media/',
     // php: 'dist/assets/php/'
   },
@@ -38,6 +39,7 @@ var path = {
     vendorcss: 'src/assets/css/vendor/*.*',
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
+    txt: 'src/assets/txt/**/*',
     // media: 'src/assets/media/**/*.*',
     // php: 'src/assets/php/**/*.*'
   },
@@ -52,6 +54,7 @@ var path = {
     vendorcss: 'src/assets/css/vendor/*.*',
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
+    txt: 'src/assets/txt/**/*.*',
     // media: 'src/assets/media/**/*.*',
     // php: 'src/assets/php/',
     user: 'src/assets/scss/_user-variables.scss'
@@ -312,6 +315,13 @@ gulp.task('media:dist', function () {
     .pipe(gulp.dest(path.dist.media));
 });
 
+// Move txt
+gulp.task('txt:dist', function () {
+  return gulp.src(path.src.txt)
+    .pipe(newer(path.dist.txt))
+    .pipe(gulp.dest(path.dist.txt));
+});
+
 // Move php
 gulp.task('php:dev', function () {
   return gulp.src(path.src.php)
@@ -398,7 +408,8 @@ gulp.task('build:dist',
       'pluginsjs:dist',
       'themejs:dist',
       'fonts:dist',
-      'image:dist'
+      'image:dist',
+      'txt:dist'
       )
     )
 );
@@ -416,6 +427,7 @@ gulp.task('watch', function () {
     gulp.watch(path.watch.img, gulp.series('image:dist'));
     gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
     gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
+    gulp.watch(path.watch.txt, gulp.series('txt:dist'));
 });
 
 // Serve

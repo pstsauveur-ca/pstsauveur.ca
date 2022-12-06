@@ -5,15 +5,13 @@
   "homepage": "https://pstsauveur.ca",
   "author": "kareniel",
   "private": true,
-  "engines": { 
-    "node" : ">=18.12.1"
+  "engines": {
+    "node": ">=18.12.1"
   },
   "scripts": {
     "start": "gulp serve",
     "build": "gulp build:dist",
     "fetch-content": "ts-node scripts/fetch-content.ts"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.2",
