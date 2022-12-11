@@ -46,6 +46,7 @@
     "gulp-uglify": "~3.0.2",
     "imagemin-jpeg-recompress": "~7.0.0",
     "imagemin-pngquant": "~9.0.2",
+    "markdown": "^0.5.0",
     "sass": "1.49.0",
     "ts-node": "^10.9.1"
   }

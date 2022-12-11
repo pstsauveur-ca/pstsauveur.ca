@@ -88,12 +88,16 @@ var gulp = require('gulp'),
     jsImport = require('gulp-js-import'),
     newer = require('gulp-newer'),
     replace = require('gulp-replace'),
+    markdown = require('markdown'),
     touch = require('gulp-touch-cmd');
     
 /* Server */
 var config = {
     server: {
-        baseDir: './dist'
+        baseDir: './dist',
+        serveStaticOptions: {
+            extensions: ['html']
+        }
     },
     ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
     notify: false
@@ -111,7 +115,7 @@ gulp.task('html:dev', function () {
   return gulp.src(path.src.html)
     .pipe(newer({ dest: path.dev.html, extra: path.watch.partials }))
     .pipe(plumber())
-    .pipe(fileinclude({ prefix: '@@', basepath: path.src.partials }))
+    .pipe(fileinclude({ prefix: '@@', basepath: path.src.partials, filters: { markdown: markdown.parse } }))
     .pipe(beautify.html({ indent_size: 2, preserve_newlines: false }))
     .pipe(gulp.dest(path.dev.html))
     .pipe(touch())
@@ -120,7 +124,7 @@ gulp.task('html:dist', function () {
   return gulp.src(path.src.html)
     .pipe(newer({ dest: path.dist.html, extra: path.watch.partials }))
     .pipe(plumber())
-    .pipe(fileinclude({ prefix: '@@', basepath: path.src.partials }))
+    .pipe(fileinclude({ prefix: '@@', basepath: path.src.partials, filters: { markdown: markdown.parse } }))
     .pipe(beautify.html({ indent_size: 2, preserve_newlines: false }))
     .pipe(gulp.dest(path.dist.html))
     .pipe(touch())
