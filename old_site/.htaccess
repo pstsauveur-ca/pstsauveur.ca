@@ -17,5 +17,5 @@
 # Redirect 301 "/page9.html" "https://pstsauveur.ca/concessions"
 Redirect 301 "/page92.html" "https://pstsauveur.ca/colombarium"
 
-# Redirect 301 "/page97.html" "https://pstsauveur.ca/evenements/giorgia-fumanti-2022"
-# Redirect 301 "/page96.html" "https://pstsauveur.ca/evenements/messe-de-minuit-2022"
+# Redirect 301 "/page97.html" "https://pstsauveur.ca/evenements/2022/12/giorgia-fumanti"
+# Redirect 301 "/page96.html" "https://pstsauveur.ca/evenements/2022/12/messe-de-minuit"
