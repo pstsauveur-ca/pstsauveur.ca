@@ -24,6 +24,7 @@ var path = {
     img: 'dist/assets/img/',
     fonts: 'dist/assets/fonts/',
     txt: 'dist/',
+    pdf: 'dist/assets/pdf/',
     // media: 'dist/assets/media/',
     // php: 'dist/assets/php/'
   },
@@ -40,6 +41,7 @@ var path = {
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
     txt: 'src/assets/txt/**/*',
+    pdf: 'src/assets/pdf/**/*',
     // media: 'src/assets/media/**/*.*',
     // php: 'src/assets/php/**/*.*'
   },
@@ -55,6 +57,7 @@ var path = {
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
     txt: 'src/assets/txt/**/*.*',
+    pdf: 'src/assets/pdf/**/*.*',
     // media: 'src/assets/media/**/*.*',
     // php: 'src/assets/php/',
     user: 'src/assets/scss/_user-variables.scss'
@@ -326,6 +329,13 @@ gulp.task('txt:dist', function () {
     .pipe(gulp.dest(path.dist.txt));
 });
 
+// Move txt
+gulp.task('pdf:dist', function () {
+  return gulp.src(path.src.pdf)
+    .pipe(newer(path.dist.pdf))
+    .pipe(gulp.dest(path.dist.pdf));
+});
+
 // Move php
 gulp.task('php:dev', function () {
   return gulp.src(path.src.php)
@@ -413,7 +423,8 @@ gulp.task('build:dist',
       'themejs:dist',
       'fonts:dist',
       'image:dist',
-      'txt:dist'
+      'txt:dist',
+      'pdf:dist'
       )
     )
 );
@@ -432,6 +443,7 @@ gulp.task('watch', function () {
     gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
     gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
     gulp.watch(path.watch.txt, gulp.series('txt:dist'));
+    gulp.watch(path.watch.pdf, gulp.series('pdf:dist'));
 });
 
 // Serve
