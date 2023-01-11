@@ -37,13 +37,13 @@
 
 						<h3 class="display-5 mb-3">Informations de l'enfant</h3>
 
-            <form name="bapteme_enfant" class="contact-form" method="post" action="https://buy.stripe.com/9AQ5nYgU01FHcmc145" netlify novalidate>
+            <form name="bapteme_enfant" class="contact-form" method="post" action="@@webRoot/services/bapteme-merci" netlify novalidate>
               <div class="messages"></div>
 
               <div class="row gx-4">
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_prenom" type="text" name="prenom" class="form-control">
+                    <input id="form_prenom" type="text" name="prenom" class="form-control" required>
                     <label for="form_prenom">Prénom de l'enfant</label>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
                 <!-- /column -->
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_nom" type="text" name="nom" class="form-control">
+                    <input id="form_nom" type="text" name="nom" class="form-control"  required>
                     <label for="form_nom">Nom de l'enfant</label>
                   </div>
                 </div> 
@@ -92,7 +92,7 @@
               <div class="row gx-4">
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_naissance" type="date" name="naissance" class="form-control" placeholder="Jane">
+                    <input id="form_naissance" type="date" name="naissance" class="form-control" placeholder="Jane"  required>
                     <label for="form_naissance">Date de naissance</label>
                   </div>
                 </div>
