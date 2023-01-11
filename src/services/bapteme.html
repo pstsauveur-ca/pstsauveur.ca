@@ -7,10 +7,10 @@
 	<div class="content-wrapper">
 		@@include('_header.html')
 		<section class="wrapper bg-primary text-white">
-			<div class="container pt-17 pb-20 pt-md-19 pb-md-17 text-center">
+			<div class="container pt-17 pb-17 pt-md-19 pb-md-17 text-center">
 				<div class="row">
 					<div class="col-lg-8 mx-auto">
-						<h1 class="display-1 mb-3 text-white">Baptême</h1>
+						<h1 class="display-1 mb-3 text-white">Inscription pour un baptême d'enfant</h1>
 					</div>
 					<!-- /column -->
 				</div>
@@ -28,68 +28,51 @@
 						</figure>
 					</div>
           <div class="col-lg-6">
-						<h2 class="display-3 mb-3">Le baptême de votre enfant</h2>
             
-            <p>Pour vous inscrire, veuillez compléter le formulaire suivant.</p>
+            <p>Possibilité de choisir une date de catéchèse. Après la catéchèse vécue sur place vous
+              aurez la possibilité de réserver une date de baptême.</p>
+            
+            <p>Il sera possible de téléverser des copies des divers documents nécessaires à
+              l'inscription. Pour des raisons de sécurité, la fabrique se réserve le droit de voir les
+              originaux en tout temps.</p>
 
 						<h3 class="display-5 mb-3">Informations de l'enfant</h3>
 
-            <form class="contact-form needs-validation" method="post" action="./assets/php/contact.php" novalidate>
+            <form name="bapteme_enfant" class="contact-form" method="post" action="@@webRoot/services/merci" netlify novalidate>
               <div class="messages"></div>
+
               <div class="row gx-4">
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Jane" required>
-                    <label for="form_name">Prénom *</label>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                    <div class="invalid-feedback">
-                      Please enter your first name.
-                    </div>
+                    <input id="form_prenom" type="text" name="prenom" class="form-control" required>
+                    <label for="form_prenom">Prénom</label>
                   </div>
                 </div>
                 <!-- /column -->
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Doe" required>
-                    <label for="form_lastname">Autres prénoms (s'il y a lieu) *</label>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                    <div class="invalid-feedback">
-                      Please enter your last name.
-                    </div>
+                    <input id="form_surnom" type="text" name="surnom" class="form-control" required>
+                    <label for="form_surnom">Autres prénoms (s'il y a lieu)</label>
                   </div>
                 </div>
                 <!-- /column -->
                 <div class="col-md-6">
                   <div class="form-floating mb-4">
-                    <input id="form_email" type="email" name="email" class="form-control" placeholder="jane.doe@example.com" required>
-                    <label for="form_email">Nom *</label>
-                    <div class="valid-feedback">
-                      Looks good!
-                    </div>
-                    <div class="invalid-feedback">
-                      Please provide a valid email address.
-                    </div>
+                    <input id="form_nom" type="text" name="nom" class="form-control" required>
+                    <label for="form_nom">Nom</label>
                   </div>
                 </div> 
                 <!-- /column -->
-                <div class="col-md-6">
-                  <div class="form-select-wrapper mb-4">
-                  </div>
-                </div>
-                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row gx-4">
                 <div class="col-3">
                   <div class="form-check mb-4">
                     <input class="form-check-input" type="radio" value="garcon" name="sexe" id="garcon" required>
                     <label class="form-check-label" for="garcon">
                       Garçon
                     </label>
-                    <div class="invalid-feedback">
-                      You must agree before submitting.
-                    </div>
                   </div>
                 </div>
                 <!-- /column -->
@@ -99,21 +82,309 @@
                     <label class="form-check-label" for="fille">
                       Fille
                     </label>
-                    <div class="invalid-feedback">
-                      You must agree before submitting.
-                    </div>
                   </div>
-                </div>
-                <!-- /column -->
-                <div class="col-12">
-                  <input type="submit" class="btn btn-primary btn-send mb-3" value="S'inscrire">
-                  <p class="text-muted"><strong>*</strong> These fields are required.</p>
                 </div>
                 <!-- /column -->
               </div>
               <!-- /.row -->
+
+              <br>
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_naissance" type="date" name="naissance" class="form-control" placeholder="Jane" required>
+                    <label for="form_naissance">Date de naissance</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Doe" required>
+                    <label for="form_lastname">Lieu de naissance (Hopital)</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Doe" required>
+                    <label for="form_lastname">Ville où est située l'hôpital de naissance</label>
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              
+              <div class="col-md-12">
+                <p>Certificat de naissance:</p>
+                <div class="form-floating mb-4">
+                  <input id="form_certificat_naissance" type="file" name="certificat_naissance" class="">
+                </div>
+              </div>
+              <!-- /column -->
+              <!-- /.row -->
+
+
+              <h3 class="display-5 mb-3">Père</h3>
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_pere_prenom" type="text" name="pere_prenom" class="form-control" required>
+                    <label for="form_pere_prenom">Prénom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_pere_nom" type="text" name="pere_nom" class="form-control" required>
+                    <label for="form_pere_nom">Nom</label>
+                  </div>
+                </div> 
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+              
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_pere_tel_cell" type="tel" name="pere_tel_cell" class="form-control" required>
+                    <label for="form_pere_tel_cell">Téléphone cellulaire</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_pere_tel_travail" type="tel" name="pere_tel_travail" class="form-control" required>
+                    <label for="form_pere_tel_travail">Téléphone au travail</label>
+                  </div>
+                </div> 
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_pere_occupation" type="text" name="pere_occupation" class="form-control" required>
+                    <label for="form_pere_occupation">Occupation</label>
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <h3 class="display-5 mb-3">Mère</h3>
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_mere_prenom" type="text" name="mere_prenom" class="form-control" required>
+                    <label for="form_mere_prenom">Prénom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_mere_nom" type="text" name="mere_nom" class="form-control" required>
+                    <label for="form_mere_nom">Nom</label>
+                  </div>
+                </div> 
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+              
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_mere_tel_cell" type="tel" name="mere_tel_cell" class="form-control" required>
+                    <label for="form_mere_tel_cell">Téléphone cellulaire</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_mere_tel_travail" type="tel" name="mere_tel_travail" class="form-control" required>
+                    <label for="form_mere_tel_travail">Téléphone au travail</label>
+                  </div>
+                </div> 
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_mere_occupation" type="text" name="mere_occupation" class="form-control" required>
+                    <label for="form_mere_occupation">Occupation</label>
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+
+              <h3 class="display-5 mb-3">Informations de contact</h3>
+
+              <div class="row gx-4">
+                <p>Parent à contacter:
+                </p>
+                <div class="col-3">
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="radio" value="contacter_pere" name="parent_a_contacter" id="contacter_pere" required>
+                    <label class="form-check-label" for="contacter_pere">
+                      Père
+                    </label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-3">
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="radio" value="contacter_mere" name="parent_a_contacter" id="contacter_mere" required>
+                    <label class="form-check-label" for="contacter_mere">
+                      Mère
+                    </label>
+                  </div>
+                </div>
+                <!-- /column -->
+                
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_courriel" type="email" name="courriel" class="form-control" required>
+                    <label for="form_courriel">Courriel</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_adresse" type="text" name="adresse" class="form-control" required>
+                    <label for="form_adresse">Adresse et nom de la rue</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_ville" type="text" name="ville" class="form-control" required>
+                    <label for="form_ville">Ville</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_code_postal" type="text" name="code_postal" class="form-control" required>
+                    <label for="form_code_postal">Code postal</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-12">
+                  <div class="form-check mb-4">
+                    <input id="form_infolettre"  class="form-check-input" type="checkbox" value="" checked name="infolettre" class="form-control" required>
+                    <label  class="form-check-label" for="form_infolettre">J'accepte de recevoir par courriel de
+                      l'information générale concernant les services offerts par la paroisse.</label>
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <h3 class="display-5 mb-3">Parrain/Marraine</h3>
+              <p>
+                Vous pouvez choisir une marraine et un parrain ou une marraine ou un parrain. La marraine et
+le parrain doivent être baptisé catholique et doivent obligatoirement avoir vécu tous leurs
+sacrements initiatiques (baptême, communion et confirmation). Leur certificat de confirmation
+doit être donné à la paroisse. Téléversement possible.
+              </p>
+
+              <h2 class="display-5 mb-3">Parrain</h2>
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_courriel_parrain" type="email" name="courriel_parrain" class="form-control">
+                    <label for="form_courriel_parrain">Prénom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_adresse_parrain" type="text" name="adresse_parrain" class="form-control">
+                    <label for="form_adresse_parrain">Nom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_ville_parrain" type="text" name="ville_parrain" class="form-control">
+                    <label for="form_ville_parrain">Municipalité de résidence</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                </div>
+                <!-- /column -->
+                <div class="col-md-12">
+                  <p>Extrait de baptême complet et récent ou extrait de confirmation:</p>
+                  <div class="form-floating mb-4">
+                    <input id="form_extrait_parrain" type="file" name="extrait_parrain" class="">
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+              <h2 class="display-5 mb-3">Marraine</h2>
+
+              <div class="row gx-4">
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_courriel_marraine" type="email" name="courriel_marraine" class="form-control">
+                    <label for="form_courriel_marraine">Prénom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_adresse_marraine" type="text" name="adresse_marraine" class="form-control">
+                    <label for="form_adresse_marraine">Nom</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                  <div class="form-floating mb-4">
+                    <input id="form_ville_marrain" type="text" name="ville_marraine" class="form-control">
+                    <label for="form_ville_marraine">Municipalité de résidence</label>
+                  </div>
+                </div>
+                <!-- /column -->
+                <div class="col-md-6">
+                </div>
+                <!-- /column -->
+                <div class="col-md-12">
+                  <p>Extrait de baptême complet et récent ou extrait de confirmation:</p>
+                  <div class="form-floating mb-4">
+                    <input id="form_extrait_marraine" type="file" name="extrait_marraine" class="">
+                  </div>
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
+
+              <div class="row gx-4">
+                <div class="col-12">
+                  <input type="submit" class="btn btn-primary btn-send mb-3" value="Envoyer l'inscription">
+                </div>
+                <!-- /column -->
+              </div>
+              <!-- /.row -->
+
             </form>
             <!-- /form -->
+
+            
 
 
           </div>
