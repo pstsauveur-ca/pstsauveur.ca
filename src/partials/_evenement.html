@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	@@include('_head.html')
 </head>
+
 <body>
 	<div class="content-wrapper">
 		@@include('_header.html')
@@ -17,7 +19,7 @@
 							<!-- /.post-category -->
 							<h1 class="display-1 mb-4 text-white">@@title</h1>
 							<ul class="post-meta mb-5">
-								<li class="post-date"><i class="uil uil-calendar-alt"></i><span>24-25 Décembre 2022</span></li>
+								<li class="post-date"><i class="uil uil-calendar-alt"></i><span>@@date</span></li>
 							</ul>
 							<!-- /.post-meta -->
 						</div>
@@ -37,8 +39,8 @@
 						<div class="blog single mt-n17">
 							<div class="card">
 								<figure class="card-img-top">
-                  <img src="@@webRoot/@@image" alt="" />
-                </figure>
+									<img src="@@webRoot/@@image" alt="" />
+								</figure>
 								<div class="card-body">
 									<div class="classic-view">
 										<article class="post">
@@ -69,4 +71,5 @@
 	@@include('_footer.html')
 	@@include('_scripts.html')
 </body>
+
 </html>
