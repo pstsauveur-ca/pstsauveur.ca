@@ -10,9 +10,7 @@ var path = {
     fontcss: 'dev/assets/css/fonts/',
     colorcss: 'dev/assets/css/colors/',
     img: 'dev/assets/img/',
-    fonts: 'dev/assets/fonts/',
-    // media: 'dev/assets/media/',
-    // php: 'dev/assets/php/',
+    fonts: 'dev/assets/fonts/'
   },
   dist: {
     html: 'dist/',
@@ -24,12 +22,10 @@ var path = {
     img: 'dist/assets/img/',
     fonts: 'dist/assets/fonts/',
     txt: 'dist/',
-    pdf: 'dist/assets/pdf/',
-    // media: 'dist/assets/media/',
-    // php: 'dist/assets/php/'
+    pdf: 'dist/assets/pdf/'
   },
   src: {
-    html: ['src/**/*.html', '!src/partials/**/*.html', '!src/assets/php/**/*.html'],
+    html: ['src/**/*.html', '!src/partials/**/*.html', 'temp/**/*.html'],
     partials: 'src/partials/',
     js: 'src/assets/js/',
     vendorjs: 'src/assets/js/vendor/*.*',
@@ -41,12 +37,10 @@ var path = {
     img: 'src/assets/img/**/*.*',
     fonts: 'src/assets/fonts/**/*.*',
     txt: 'src/assets/txt/**/*',
-    pdf: 'src/assets/pdf/**/*',
-    // media: 'src/assets/media/**/*.*',
-    // php: 'src/assets/php/**/*.*'
+    pdf: 'src/assets/pdf/**/*'
   },
   watch: {
-    html: ['src/**/*.html', '!src/assets/php/**/*.html'],
+    html: ['src/**/*.html', 'temp/**/*.html'],
     partials: 'src/partials/**/*.*',
     themejs: 'src/assets/js/theme.js',
     vendorjs: 'src/assets/js/vendor/*.*',
@@ -58,8 +52,6 @@ var path = {
     fonts: 'src/assets/fonts/**/*.*',
     txt: 'src/assets/txt/**/*.*',
     pdf: 'src/assets/pdf/**/*.*',
-    // media: 'src/assets/media/**/*.*',
-    // php: 'src/assets/php/',
     user: 'src/assets/scss/_user-variables.scss'
   },
   clean: {
@@ -70,47 +62,47 @@ var path = {
 
 /* Include gulp and plugins */
 var gulp = require('gulp'),
-    webserver = require('browser-sync'),
-    reload = webserver.reload,
-    plumber = require('gulp-plumber'),
-    sourcemaps = require('gulp-sourcemaps'),
-    sass = require('gulp-sass')(require('sass')),
-    sassUnicode = require('gulp-sass-unicode'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleanCSS = require('gulp-clean-css'),
-    uglify = require('gulp-uglify'),
-    cache = require('gulp-cache'),
-    imagemin = require('gulp-imagemin'),
-    jpegrecompress = require('imagemin-jpeg-recompress'),
-    pngquant = require('imagemin-pngquant'),
-    del = require('del'),
-    fileinclude = require('gulp-file-include'),
-    beautify = require('gulp-beautify'),
-    minify = require('gulp-minify'),
-    concat = require('gulp-concat'),
-    jsImport = require('gulp-js-import'),
-    newer = require('gulp-newer'),
-    replace = require('gulp-replace'),
-    markdown = require('markdown'),
-    touch = require('gulp-touch-cmd');
-    
+  webserver = require('browser-sync'),
+  reload = webserver.reload,
+  plumber = require('gulp-plumber'),
+  sourcemaps = require('gulp-sourcemaps'),
+  sass = require('gulp-sass')(require('sass')),
+  sassUnicode = require('gulp-sass-unicode'),
+  autoprefixer = require('gulp-autoprefixer'),
+  cleanCSS = require('gulp-clean-css'),
+  uglify = require('gulp-uglify'),
+  cache = require('gulp-cache'),
+  imagemin = require('gulp-imagemin'),
+  jpegrecompress = require('imagemin-jpeg-recompress'),
+  pngquant = require('imagemin-pngquant'),
+  del = require('del'),
+  fileinclude = require('gulp-file-include'),
+  beautify = require('gulp-beautify'),
+  minify = require('gulp-minify'),
+  concat = require('gulp-concat'),
+  jsImport = require('gulp-js-import'),
+  newer = require('gulp-newer'),
+  replace = require('gulp-replace'),
+  markdown = require('markdown'),
+  touch = require('gulp-touch-cmd');
+
 /* Server */
 var config = {
-    server: {
-        baseDir: './dist',
-        serveStaticOptions: {
-            extensions: ['html']
-        }
-    },
-    ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
-    notify: false
+  server: {
+    baseDir: './dist',
+    serveStaticOptions: {
+      extensions: ['html']
+    }
+  },
+  ghostMode: false, // By setting true, clicks, scrolls and form inputs on any device will be mirrored to all others
+  notify: false
 };
 
 /* Tasks */
 
 // Start the server
 gulp.task('webserver', function () {
-    webserver(config);
+  webserver(config);
 });
 
 // Compile html
@@ -271,22 +263,22 @@ gulp.task('vendorcss:dist', function () {
 });
 
 // Compile vendor plugins js
-gulp.task('pluginsjs:dev', function() {
-    return gulp.src([
-      'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-      path.src.vendorjs
-    ])
-    .pipe(jsImport({hideConsole: true}))
+gulp.task('pluginsjs:dev', function () {
+  return gulp.src([
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+    path.src.vendorjs
+  ])
+    .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
     .pipe(gulp.dest(path.dev.js))
     .pipe(touch())
 });
-gulp.task('pluginsjs:dist', function() {
-    return gulp.src([
-      'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-      path.src.vendorjs
-    ])
-    .pipe(jsImport({hideConsole: true}))
+gulp.task('pluginsjs:dist', function () {
+  return gulp.src([
+    'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
+    path.src.vendorjs
+  ])
+    .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
     .pipe(uglify())
     .pipe(gulp.dest(path.dist.js))
@@ -310,18 +302,6 @@ gulp.task('themejs:dist', function () {
     .on('end', () => { reload(); });
 });
 
-// Move media
-gulp.task('media:dev', function () {
-  return gulp.src(path.src.media)
-    .pipe(newer(path.dev.media))
-    .pipe(gulp.dest(path.dev.media));
-});
-gulp.task('media:dist', function () {
-  return gulp.src(path.src.media)
-    .pipe(newer(path.dist.media))
-    .pipe(gulp.dest(path.dist.media));
-});
-
 // Move txt
 gulp.task('txt:dist', function () {
   return gulp.src(path.src.txt)
@@ -334,18 +314,6 @@ gulp.task('pdf:dist', function () {
   return gulp.src(path.src.pdf)
     .pipe(newer(path.dist.pdf))
     .pipe(gulp.dest(path.dist.pdf));
-});
-
-// Move php
-gulp.task('php:dev', function () {
-  return gulp.src(path.src.php)
-    .pipe(newer(path.dev.php))
-    .pipe(gulp.dest(path.dev.php));
-});
-gulp.task('php:dist', function () {
-  return gulp.src(path.src.php)
-    .pipe(newer(path.dist.php))
-    .pipe(gulp.dest(path.dist.php));
 });
 
 // Image processing
@@ -375,7 +343,7 @@ gulp.task('image:dist', function () {
       }),
       pngquant(),
       imagemin.svgo({ plugins: [{ removeViewBox: false }] })
-        ])))
+    ])))
     .pipe(gulp.dest(path.dist.img))
     .on('end', () => { reload(); });
 });
@@ -390,13 +358,13 @@ gulp.task('clean:dist', function () {
 
 // Clear cache
 gulp.task('cache:clear', function () {
-    cache.clearAll();
+  cache.clearAll();
 });
 
 // Assembly Dev
 gulp.task('build:dev',
-    gulp.series('clean:dev',
-      gulp.parallel(
+  gulp.series('clean:dev',
+    gulp.parallel(
       'html:dev',
       'css:dev',
       'fontcss:dev',
@@ -406,14 +374,14 @@ gulp.task('build:dev',
       'themejs:dev',
       'fonts:dev',
       'image:dev'
-      )
     )
+  )
 );
 
 // Assembly Dist
 gulp.task('build:dist',
-    gulp.series('clean:dist',
-      gulp.parallel(
+  gulp.series('clean:dist',
+    gulp.parallel(
       'html:dist',
       'css:dist',
       'fontcss:dist',
@@ -425,44 +393,43 @@ gulp.task('build:dist',
       'image:dist',
       'txt:dist',
       'pdf:dist'
-      )
     )
+  )
 );
-
 
 // Launching tasks when files change
 gulp.task('watch', function () {
-    gulp.watch(path.watch.html, gulp.series('html:dist'));
-    gulp.watch(path.watch.css, gulp.series('css:dist'));
-    gulp.watch(path.watch.fontcss, gulp.series('fontcss:dist'));
-    gulp.watch(path.watch.colorcss, gulp.series('colorcss:dist'));
-    gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dist'));
-    gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dist'));
-    gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
-    gulp.watch(path.watch.img, gulp.series('image:dist'));
-    gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
-    gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
-    gulp.watch(path.watch.txt, gulp.series('txt:dist'));
-    gulp.watch(path.watch.pdf, gulp.series('pdf:dist'));
+  gulp.watch(path.watch.html, gulp.series('html:dist'));
+  gulp.watch(path.watch.css, gulp.series('css:dist'));
+  gulp.watch(path.watch.fontcss, gulp.series('fontcss:dist'));
+  gulp.watch(path.watch.colorcss, gulp.series('colorcss:dist'));
+  gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dist'));
+  gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dist'));
+  gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
+  gulp.watch(path.watch.img, gulp.series('image:dist'));
+  gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
+  gulp.watch(path.watch.user, gulp.series('colorcss:dist'));
+  gulp.watch(path.watch.txt, gulp.series('txt:dist'));
+  gulp.watch(path.watch.pdf, gulp.series('pdf:dist'));
 });
 
 // Serve
 gulp.task('serve', gulp.series(
-    gulp.parallel('webserver','watch')
+  gulp.parallel('webserver', 'watch')
 ));
 
 // Dev
 gulp.task('build:dev', gulp.series(
-    'build:dev'
+  'build:dev'
 ));
 
 // Dist
 gulp.task('build:dist', gulp.series(
-    'build:dist'
+  'build:dist'
 ));
 
 // Default tasks
 gulp.task('default', gulp.series(
-    'build:dist',
-    gulp.parallel('webserver','watch')
+  'build:dist',
+  gulp.parallel('webserver', 'watch')
 ));

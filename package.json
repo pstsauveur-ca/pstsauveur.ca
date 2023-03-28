@@ -14,6 +14,7 @@
     "fetch-content": "ts-node scripts/fetch-content.ts"
   },
   "devDependencies": {
+    "@directus/sdk": "^10.3.3",
     "@popperjs/core": "^2.11.2",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
