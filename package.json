@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "gulp serve",
-    "build": "gulp build:dist",
+    "build": "node tasks/directus.js && gulp build:dist",
     "fetch-content": "ts-node scripts/fetch-content.ts"
   },
   "devDependencies": {

@@ -7,25 +7,40 @@ const directus = new Directus('https://cms.pstsauveur.ca');
 async function start() {
   await directus.auth.static(process.env.DIRECTUS_TOKEN)
 
-  const { data } = await directus.items('evenements').readByQuery({ sort: ['date'] });
+  const { data } = await directus
+    .items('evenements')
+    .readByQuery({ sort: ['date'] });
 
-  for await (const event of data) {
-    const [year, month, day] = event.date.split('T')[0].split('-')
-    const dirname = path.join(__dirname, '..', 'temp/evenements', `${year}/${month}`)
-    const filepath = path.join(dirname, `${event.id}`)
-    const date = capitalize(new Intl.DateTimeFormat('fr-CA', {
+  const events = data.map(event => {
+    const [year, month] = event.date.split('T')[0].split('-')
+
+    event.formattedDate = capitalize(new Intl.DateTimeFormat('fr-CA', {
       dateStyle: 'full',
       timeStyle: 'short'
     }).format(new Date(event.date)))
+    event.link = `evenements/${year}/${month}/${event.id}`
+
+    return event
+  })
+
+  await mkdir(path.join(__dirname, '..', 'temp/evenements'), { recursive: true })
+
+  await writeFile(path.join(__dirname, '../temp/evenements_a_venir.json'), 
+    JSON.stringify(events.slice(-5), null, 2), 'utf8')
+
+  for await (const event of events) {
+    const [year, month] = event.date.split('T')[0].split('-')
+    const dirname = path.join(__dirname, '..', 'temp/evenements', `${year}/${month}`)
+    const filepath = path.join(dirname, `${event.id}`)
 
     await mkdir(dirname, { recursive: true })
     await writeFile(`${filepath}.html`, `
-@@include('_evenement.html', {
-  title: "${event.titre}",
-  category: "Évènements",
-  date: "${date}",
-  text: "@@include(markdown('../../temp/evenements/${year}/${month}/${event.id}.md'))"
-})`, 'utf8')
+      @@include('_evenement.html', {
+        title: "${event.titre}",
+        category: "Évènements",
+        date: "${event.formattedDate}",
+        text: "@@include(markdown('../../temp/evenements/${year}/${month}/${event.id}.md'))"
+      })`, 'utf8')
     await writeFile(`${filepath}.md`, event.contenu, 'utf8')
   }
 }
