@@ -5,8 +5,19 @@ const path = require('path');
 const directus = new Directus('https://cms.pstsauveur.ca');
 
 async function start() {
+
+  await mkdir(path.join(__dirname, '../temp'), { recursive: true })
+
   await directus.auth.static(process.env.DIRECTUS_TOKEN)
 
+  await fetchAndSaveEvents(directus)
+  await fetchAndSaveBaptismAvailabilities(directus)
+
+  console.log('Done.')
+}
+
+async function fetchAndSaveEvents (directus) {
+  console.log('Fetching evenements...')
   const { data } = await directus
     .items('evenements')
     .readByQuery({ sort: ['date'] });
@@ -14,16 +25,11 @@ async function start() {
   const events = data.map(event => {
     const [year, month] = event.date.split('T')[0].split('-')
 
-    event.formattedDate = capitalize(new Intl.DateTimeFormat('fr-CA', {
-      dateStyle: 'full',
-      timeStyle: 'short'
-    }).format(new Date(event.date)))
+    event.formattedDate = formatDateLong(event.date)
     event.link = `evenements/${year}/${month}/${event.id}`
 
     return event
   })
-
-  await mkdir(path.join(__dirname, '..', 'temp/evenements'), { recursive: true })
 
   await writeFile(path.join(__dirname, '../temp/evenements_a_venir.json'), 
     JSON.stringify(events.slice(-5), null, 2), 'utf8')
@@ -45,8 +51,60 @@ async function start() {
   }
 }
 
+async function fetchAndSaveBaptismAvailabilities(directus) {
+  console.log('Fetching disponibilite_bapteme + disponibilite_catechese_bapteme...')
+
+  const disponibilite_bapteme = await directus
+    .items('disponibilite_bapteme')
+    .readByQuery({ 
+      sort: ['date'], 
+      filter: {
+        status: {
+          _eq: 'published'
+        },
+        date: {
+          _gte: '$NOW',
+        },
+      }
+    }).then(res => res.data.map(d => {
+      d.formattedDate = formatDateLong(d.date)
+      return d
+    }));
+
+  const disponibilite_catechese_bapteme = await directus
+    .items('disponibilite_catechese_bapteme')
+    .readByQuery({ 
+      sort: ['date'], 
+      filter: {
+        status: {
+          _eq: 'published'
+        },
+        date: {
+          _gte: '$NOW',
+        },
+      }
+    }).then(res => res.data.map(d => {
+      d.formattedDate = formatDateLong(d.date)
+      return d
+    }));
+
+
+  await writeFile(path.join(__dirname, '../temp/disponibilites_bapteme.json'), 
+    JSON.stringify(disponibilite_bapteme, null, 2), 'utf8')
+
+  await writeFile(path.join(__dirname, '../temp/disponibilite_catechese_bapteme.json'), 
+    JSON.stringify(disponibilite_catechese_bapteme, null, 2), 'utf8')
+}
+
 start()
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+function formatDateLong (str) {
+  return capitalize(new Intl.DateTimeFormat('fr-CA', {
+    dateStyle: 'full',
+    timeStyle: 'short'
+  }).format(new Date(str)))
 }

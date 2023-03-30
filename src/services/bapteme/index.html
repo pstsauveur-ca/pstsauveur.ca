@@ -86,10 +86,7 @@
             <div class="form-select-wrapper mb-4">
               <select class="form-select" aria-label="Choisir une date">
                 <option selected>Choisir une date</option>
-                <option value="1">2 mai 2023</option>
-                <option value="2">23 avril 2023 </option>
-                <option value="3">14 mai 2023 </option>
-                <option value="4">8 juin 2023 </option>
+                @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
               </select>
             </div>
 
@@ -111,10 +108,7 @@
               <div class="form-select-wrapper mb-4">
                 <select class="form-select" aria-label="Choisir une date">
                   <option selected>Choisir une date</option>
-                  <option value="1">2 mai 2023</option>
-                  <option value="2">23 avril 2023 </option>
-                  <option value="3">14 mai 2023 </option>
-                  <option value="4">8 juin 2023 </option>
+                  @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
                 </select>
               </div>
             </div>
