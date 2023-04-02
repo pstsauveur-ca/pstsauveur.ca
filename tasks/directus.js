@@ -5,7 +5,6 @@ const path = require('path');
 const directus = new Directus('https://cms.pstsauveur.ca');
 
 async function start() {
-
   await mkdir(path.join(__dirname, '../temp'), { recursive: true })
 
   await directus.auth.static(process.env.DIRECTUS_TOKEN)
@@ -20,7 +19,14 @@ async function fetchAndSaveEvents (directus) {
   console.log('Fetching evenements...')
   const { data } = await directus
     .items('evenements')
-    .readByQuery({ sort: ['date'] });
+    .readByQuery({ 
+      sort: ['date'], 
+      filter: {
+        status: {
+          _eq: 'published'
+        }
+      } 
+    });
 
   const events = data.map(event => {
     const [year, month] = event.date.split('T')[0].split('-')
@@ -32,7 +38,7 @@ async function fetchAndSaveEvents (directus) {
   })
 
   await writeFile(path.join(__dirname, '../temp/evenements_a_venir.json'), 
-    JSON.stringify(events.slice(-5), null, 2), 'utf8')
+    JSON.stringify(events.filter(ev => isInTheFuture(ev.date)).slice(0, 5), null, 2), 'utf8')
 
   for await (const event of events) {
     const [year, month] = event.date.split('T')[0].split('-')
@@ -47,7 +53,7 @@ async function fetchAndSaveEvents (directus) {
         date: "${event.formattedDate}",
         text: "@@include(markdown('../../temp/evenements/${year}/${month}/${event.id}.md'))"
       })`, 'utf8')
-    await writeFile(`${filepath}.md`, event.contenu, 'utf8')
+    await writeFile(`${filepath}.md`, event.contenu || '', 'utf8')
   }
 }
 
@@ -107,4 +113,8 @@ function formatDateLong (str) {
     dateStyle: 'full',
     timeStyle: 'short'
   }).format(new Date(str)))
+}
+
+function isInTheFuture (str) {
+  return new Date(str) > new Date()
 }
