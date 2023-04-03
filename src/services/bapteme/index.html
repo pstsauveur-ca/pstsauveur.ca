@@ -147,7 +147,7 @@
               <h3 class="display-5 mt-8 mb-4">Date de baptême</h3>
 
               <div class="form-select-wrapper mb-4">
-                <select class="form-select" aria-label="Choisir une date">
+                <select class="form-select" aria-label="Choisir une date" id="disponibilite_bapteme">
                   <option selected>Choisir une date</option>
                   @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
                 </select>
@@ -156,8 +156,7 @@
               <h3 class="display-5 mt-8 mb-4">Date de catéchèse</h3>
 
               <p>La catéchèse qui prépare le baptême est obligatoire (même si vous l’avez vécu
-                précédemment pour un autre enfant que vous auriez fait baptiser à la paroisse Saint-
-                Sauveur). Les deux parents doivent être présents à cette rencontre. Nous vous demandons
+                précédemment pour un autre enfant que vous auriez fait baptiser à la paroisse Saint-                Sauveur). Les deux parents doivent être présents à cette rencontre. Nous vous demandons
                 de ne pas amener votre enfant ou vos enfants avec vous à cette rencontre, afin de pouvoir
                 vous concentrer, vous et les autres autour de vous.</p> 
                 
@@ -166,14 +165,14 @@
 
               <div class="form-floating mb-4">
                 <div class="form-select-wrapper mb-4">
-                  <select class="form-select" aria-label="Choisir une date">
+                  <select id="disponibilite_catechese_bapteme" class="form-select" aria-label="Choisir une date">
                     <option selected>Choisir une date</option>
                     @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
                   </select>
                 </div>
               </div>
 
-              <input type="submit" class="btn btn-primary my-4" href="informations" value="Continuer" disabled>
+              <input type="submit" class="btn btn-primary my-4" value="Continuer" disabled>
             
             </form>
 
@@ -193,16 +192,46 @@
 
   <script src="https://www.google.com/recaptcha/api.js?render=6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL"></script>
 
-<script>
-  function onClick(e) {
-    e.preventDefault();
-    grecaptcha.ready(function() {
-      grecaptcha.execute('6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL', {action: 'submit'}).then(function(token) {
-          // Add your logic to submit to your backend server here.
-          fetch('localhost:9000/')
+  <script>
+    let datesCatechese
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const baptemeEl = document.getElementById('disponibilite_bapteme');
+      const catecheseEl = document.getElementById('disponibilite_catechese_bapteme');
+      datesCatechese = [...catecheseEl.options].slice(1).map(o => ({ value: o.value, label: o.label }))
+      console.log('baptemeEl', baptemeEl)
+      console.log('datesCatechese', datesCatechese)
+
+      baptemeEl.addEventListener('change', onChange)
+    })
+
+    function onChange(e) {
+      const baptemeDate = new Date(e.target.value);
+      const catecheseEl = document.getElementById('disponibilite_catechese_bapteme');
+
+      [...catecheseEl.options].forEach((_, index) => {
+        console.log(index)
+        catecheseEl.remove(1);
+      })
+
+      datesCatechese.forEach((item, index) => {
+        const catecheseDate = new Date(item.value)
+        if (catecheseDate < baptemeDate) {
+          console.log(catecheseDate)
+          catecheseEl.add(new Option(item.label, item.value))
+        }
+      })
+    }
+
+    function onClick(e) {
+      e.preventDefault();
+      grecaptcha.ready(function() {
+        grecaptcha.execute('6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL', {action: 'submit'}).then(function(token) {
+            // Add your logic to submit to your backend server here.
+            fetch('localhost:9000/')
+        });
       });
-    });
-  }
-</script>
+    }
+  </script>
 </body>
 </html>
