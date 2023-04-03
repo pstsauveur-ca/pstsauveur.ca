@@ -22,14 +22,7 @@
     <section class="wrapper bg-light">
       <div class="container py-12 py-md-12">
         <div class="row gx-lg-8 gx-xl-12 gy-10">
-					<!-- <div class="col-lg-6 order-lg-2 position-relative">
-						<figure class="mb-0">
-							<img src="../../assets/img/photos/baptism-of-christ-antoine-coypel.png" alt="">
-						</figure>
-					</div>  -->
-
-					<div class="col-lg-2">
-					</div>
+					<div class="col-lg-2"></div>
 
           <div class="col-lg-8">
 						<div class="row mb-md-8 mb-4 gx-lg-8 gx-xl-12 gy-6 process-wrapper line">
@@ -59,61 +52,130 @@
               <li>Le certificat de naissance de l’enfant à baptiser (émis par le directeur de l’état
                 civil)</li>
               <li>La preuve de confirmation de la marraine et du parrain (vous pouvez choisir
-                une marraine ou un parrain ou avoir une marraine et un parrain. Il n’est pas
+                une marraine OU un parrain OU une marraine et un parrain. Il n’est pas
                 possible d’avoir deux marraines ou deux parrains. Si un des deux ou les deux
                 ont été confirmé à la paroisse Saint-Sauveur, vous devrez indiquer le nom et
                 l’année de confirmation)</li>
             </ol>
 
-            <p>Si vous avez ces documents, poursuivez votre inscription durant laquelle vous pourrez
-              téléverser les documents obligatoires dans le formulaire d’inscription et pourrez réserver
-              une date de baptême. Au besoin, vous pouvez consulter les prochaines dates de baptêmes.</p>
+            <p>Si vous avez ces documents, téléversez les maintenant afin d'avoir accès au formulaire d’inscription. Au besoin, vous pouvez consulter les prochaines dates de baptêmes.</p>
 
-            <h3 class="display-5 my-4">Documents</h3>
+            <form action="localhost:9000/2015-03-31/functions/function/invocations">
+              <h3 class="display-5 mt-8 mb-4">Documents</h3>
 
-            <h4 class="fs-15 text-uppercase text-navy">Certificat de naissance de l'enfant</h4>
-            <div class="form-floating mb-6">
-              <input id="form_certificat_naissance" type="file" name="certificat_naissance" class="">
-            </div>
+              <h4 class="lead fs-lg">
+                Certificat de naissance de l'enfant
+                <strong class="text-orange">*</strong>
+              </h4>
 
-            <h4 class="fs-15 text-uppercase text-navy">Preuve(s) de confirmation de la marraine et/ou du parrain</h4>
-            <div class="form-floating mb-6">
-              <input id="form_certificat_naissance" type="file" name="certificat_naissance" class="" multiple="multiple">
-            </div>
-            
-            <h3 class="display-5 my-4">Date de baptême</h3>
+              <div class="row mb-4">
+                <div class="col-lg-6">
+                  <div class="form-floating mb-6">
+                    <input id="form_certificat_naissance" type="file" name="certificat_naissance" class="my-4">
+                  </div>
+                </div>
+              </div> 
 
-            <div class="form-select-wrapper mb-4">
-              <select class="form-select" aria-label="Choisir une date">
-                <option selected>Choisir une date</option>
-                @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
-              </select>
-            </div>
 
-            <h3 class="display-5 my-4">Date de catéchèse</h3>
+              <h4 class="lead fs-lg">Preuve de confirmation de la marraine</h4>
 
-            <p>La catéchèse qui prépare le baptême est obligatoire (même si vous l’avez vécu
-              précédemment pour un autre enfant que vous auriez fait baptiser à la paroisse Saint-
-              Sauveur). Les deux parents doivent être présents à cette rencontre. Nous vous demandons
-              de ne pas amener votre enfant ou vos enfants avec vous à cette rencontre, afin de pouvoir
-              vous concentrer, vous et les autres autour de vous.</p> 
+              <div class="row mb-4">
+                <div class="col-lg-6">
+                  <style>
+                    #marraine_confirmation_ailleurs:checked ~ #marraine_confirmation_annee,
+                    #parrain_confirmation_ailleurs:checked ~ #parrain_confirmation_annee {
+                      visibility: hidden;
+                      display: none;
+                    }
+                    #marraine_confirmation_ici:checked ~ #marraine_confirmation_doc,
+                    #parrain_confirmation_ici:checked ~ #parrain_confirmation_doc {
+                      visibility: hidden;
+                      display: none;
+                    }
+                  </style>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="marraine_confirmation" id="marraine_confirmation_ici">
+                    <label class="form-check-label" for="marraine_confirmation_ici">
+                      Confirmée à Saint-Sauveur
+                    </label>
+                    <br>
+                    <input class="form-check-input" type="radio" name="marraine_confirmation" id="marraine_confirmation_ailleurs"  checked>
+                    <label class="form-check-label" for="marraine_confirmation_ailleurs">
+                      Confirmée ailleurs
+                    </label>
+                    <div class="form-floating my-4" id="marraine_confirmation_annee">
+                      <input id="marraine_confirmation_annee" type="text" class="form-control">
+                      <label for="marraine_confirmation_annee">Année de confirmation</label>
+                    </div>
+                    <input id="marraine_confirmation_doc" class="my-4" type="file" name="marraine_confirmation_doc"
+                    accept="image/*, application/pdf">
+                  </div>
+
+                </div>
+              </div>
+
+
+              <h4 class="lead fs-lg">Preuve de confirmation du parrain</h4>
+
+              <div class="row mb-4">
+                <div class="col-lg-6">
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="parrain_confirmation" id="parrain_confirmation_ici">
+                    <label class="form-check-label" for="parrain_confirmation_ici">
+                      Confirmé à Saint-Sauveur
+                    </label>
+                    <br>
+                    <input class="form-check-input" type="radio" name="parrain_confirmation" id="parrain_confirmation_ailleurs" checked>
+                    <label class="form-check-label" for="parrain_confirmation_ailleurs">
+                      Confirmé ailleurs
+                    </label>
+
+                    <div class="form-floating my-4" id="parrain_confirmation_annee">
+                      <input id="parrain_confirmation_annee" type="text" class="form-control">
+                      <label for="parrain_confirmation_annee">Année de confirmation</label>
+                    </div>
+
+                    <input id="parrain_confirmation_doc" class="my-4" type="file" name="parrain_confirmation_doc" accept="image/*, application/pdf">
+                  </div>
+
+                </div>
+              </div>
               
-              <p>Si vous étiez dans l’incapacité de
-              participer à la rencontre, nous déplacerons la date du baptême afin de vous permettre de
-              vivre la catéchèse avant le baptême. Comme le baptême est l’entrée dans une famille, il
-              nous semble bon de prendre un temps ensemble afin de faire connaissance, de part et
-              d’autre, comme membre de la même famille chrétienne.</p>
 
-            <div class="form-floating mb-4">
+              <h3 class="display-5 mt-8 mb-4">Date de baptême</h3>
+
               <div class="form-select-wrapper mb-4">
                 <select class="form-select" aria-label="Choisir une date">
                   <option selected>Choisir une date</option>
-                  @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
+                  @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
                 </select>
               </div>
-            </div>
 
-            <a class="btn btn-primary" href="informations">Continuer</a>
+              <h3 class="display-5 mt-8 mb-4">Date de catéchèse</h3>
+
+              <p>La catéchèse qui prépare le baptême est obligatoire (même si vous l’avez vécu
+                précédemment pour un autre enfant que vous auriez fait baptiser à la paroisse Saint-
+                Sauveur). Les deux parents doivent être présents à cette rencontre. Nous vous demandons
+                de ne pas amener votre enfant ou vos enfants avec vous à cette rencontre, afin de pouvoir
+                vous concentrer, vous et les autres autour de vous.</p> 
+                
+                <p>Si vous étiez dans l’incapacité de participer à la rencontre, nous déplacerons la date du baptême afin de vous permettre de vivre la catéchèse avant le baptême. Comme le baptême est l’entrée dans une famille, il nous semble bon de prendre un temps ensemble afin de faire connaissance, de part et
+                d’autre, comme membre de la même famille chrétienne.</p>
+
+              <div class="form-floating mb-4">
+                <div class="form-select-wrapper mb-4">
+                  <select class="form-select" aria-label="Choisir une date">
+                    <option selected>Choisir une date</option>
+                    @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
+                  </select>
+                </div>
+              </div>
+
+              <input type="submit" class="btn btn-primary my-4" href="informations" value="Continuer" disabled>
+            
+            </form>
 
           </div>
           <!--/column -->
@@ -128,5 +190,19 @@
 	@@include('_footer.html')
 	@@include('_page-progress.html')
 	@@include('_scripts.html')
+
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL"></script>
+
+<script>
+  function onClick(e) {
+    e.preventDefault();
+    grecaptcha.ready(function() {
+      grecaptcha.execute('6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL', {action: 'submit'}).then(function(token) {
+          // Add your logic to submit to your backend server here.
+          fetch('localhost:9000/')
+      });
+    });
+  }
+</script>
 </body>
 </html>
