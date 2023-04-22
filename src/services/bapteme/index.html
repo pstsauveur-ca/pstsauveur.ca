@@ -60,97 +60,117 @@
 
             <p>Si vous avez ces documents, téléversez les maintenant afin d'avoir accès au formulaire d’inscription. Au besoin, vous pouvez consulter les prochaines dates de baptêmes.</p>
 
-            <form action="localhost:9000/2015-03-31/functions/function/invocations">
+            <form id="form_bapteme_1">
               <h3 class="display-5 mt-8 mb-4">Documents</h3>
+
+              <p>Les formats supportés pour les documents sont: images (.png, .jpg, etc) ou PDF.</p>
 
               <h4 class="lead fs-lg">
                 Certificat de naissance de l'enfant
                 <strong class="text-orange">*</strong>
               </h4>
 
-              <div class="row mb-4">
+              <div class="row">
                 <div class="col-lg-6">
                   <div class="form-floating mb-6">
-                    <input id="form_certificat_naissance" type="file" name="certificat_naissance" class="my-4">
+                    <input id="doc_enfant" type="file" name="certificat_naissance" class="my-4" accept="image/*, application/pdf" required>
                   </div>
                 </div>
               </div> 
 
-
-              <h4 class="lead fs-lg">Preuve de confirmation de la marraine</h4>
-
               <div class="row mb-4">
                 <div class="col-lg-6">
+
+                  <h4 class="lead fs-lg">Preuves de confirmation</h4>
+
                   <style>
-                    #marraine_confirmation_ailleurs:checked ~ #marraine_confirmation_annee,
-                    #parrain_confirmation_ailleurs:checked ~ #parrain_confirmation_annee {
-                      visibility: hidden;
-                      display: none;
-                    }
-                    #marraine_confirmation_ici:checked ~ #marraine_confirmation_doc,
-                    #parrain_confirmation_ici:checked ~ #parrain_confirmation_doc {
+                    #opt_parrain_seulement:checked ~ .section-marraine,
+                    #opt_marraine_seulement:checked ~ .section-parrain, 
+                    #opt_marraine_ailleurs:checked ~ #marraine_confirmation_annee,
+                    #opt_parrain_ailleurs:checked ~ #parrain_confirmation_annee,
+                    #opt_marraine_ici:checked ~ #doc_marraine,
+                    #opt_parrain_ici:checked ~ #doc_parrain {
                       visibility: hidden;
                       display: none;
                     }
                   </style>
 
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="marraine_confirmation" id="marraine_confirmation_ici">
-                    <label class="form-check-label" for="marraine_confirmation_ici">
-                      Confirmée à Saint-Sauveur
+                  <div class="">
+                    <p>Notre enfant aura:</p>
+
+                    <input class="form-check-input" type="radio" name="parrain_marraine" id="opt_parrain_marraine" checked>
+                    <label class="form-check-label" for="opt_parrain_marraine" >
+                      Une marraine et un parrain 
                     </label>
                     <br>
-                    <input class="form-check-input" type="radio" name="marraine_confirmation" id="marraine_confirmation_ailleurs"  checked>
-                    <label class="form-check-label" for="marraine_confirmation_ailleurs">
-                      Confirmée ailleurs
+                    <input class="form-check-input" type="radio" name="parrain_marraine" id="opt_marraine_seulement">
+                    <label class="form-check-label" for="opt_marraine_seulement">
+                      Seulement une marraine 
                     </label>
-                    <div class="form-floating my-4" id="marraine_confirmation_annee">
-                      <input id="marraine_confirmation_annee" type="text" class="form-control">
-                      <label for="marraine_confirmation_annee">Année de confirmation</label>
-                    </div>
-                    <input id="marraine_confirmation_doc" class="my-4" type="file" name="marraine_confirmation_doc"
-                    accept="image/*, application/pdf">
-                  </div>
+                    <br>
+                    <input class="form-check-input" type="radio" name="parrain_marraine" id="opt_parrain_seulement">
+                    <label class="form-check-label" for="opt_parrain_seulement">
+                      Seulement un parrain
+                    </label>
 
+                    <div class="section-marraine"> 
+                      <h4 class="lead mt-4">La marraine</h4>
+  
+                      <input class="form-check-input" type="radio" name="marraine_confirmation" id="opt_marraine_ici" checked>
+                      <label class="form-check-label" for="opt_marraine_ici">
+                        Confirmée à Saint-Sauveur
+                      </label>
+                      <br>
+                      <input class="form-check-input" type="radio" name="marraine_confirmation" id="opt_marraine_ailleurs">
+                      <label class="form-check-label" for="opt_marraine_ailleurs">
+                        Confirmée ailleurs
+                      </label>
+                      <div class="form-floating my-4" id="marraine_confirmation_annee">
+                        <input id="input_marraine_annee" type="text" class="form-control" maxlength="4">
+                        <label for="input_marraine_annee">Année de confirmation</label>
+                      </div>
+                      <input id="doc_marraine" class="my-4" type="file" 
+                      accept="image/*, application/pdf">
+                    </div>
+
+                    <div class="section-parrain">
+                      <h4 class="lead mt-4">Le parrain</h4>
+
+                      <input class="form-check-input ms-0" type="radio" name="parrain_confirmation" id="opt_parrain_ici" checked>
+                      <label class="form-check-label" for="opt_parrain_ici">
+                        Confirmé à Saint-Sauveur
+                      </label>
+                      <br>
+                      <input class="form-check-input ms-0" type="radio" name="parrain_confirmation" id="opt_parrain_ailleurs">
+                      <label class="form-check-label" for="opt_parrain_ailleurs">
+                        Confirmé ailleurs
+                      </label>
+  
+                      <div class="form-floating my-4" id="parrain_confirmation_annee">
+                        <input id="input_parrain_annee" type="text" class="form-control" maxlength="4">
+                        <label for="input_parrain_annee">Année de confirmation</label>
+                      </div>
+  
+                      <input id="doc_parrain" class="my-4" type="file" accept="image/*, application/pdf">
+                    </div>
+
+                  </div>
                 </div>
               </div>
 
-
-              <h4 class="lead fs-lg">Preuve de confirmation du parrain</h4>
-
-              <div class="row mb-4">
-                <div class="col-lg-6">
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="parrain_confirmation" id="parrain_confirmation_ici">
-                    <label class="form-check-label" for="parrain_confirmation_ici">
-                      Confirmé à Saint-Sauveur
-                    </label>
-                    <br>
-                    <input class="form-check-input" type="radio" name="parrain_confirmation" id="parrain_confirmation_ailleurs" checked>
-                    <label class="form-check-label" for="parrain_confirmation_ailleurs">
-                      Confirmé ailleurs
-                    </label>
-
-                    <div class="form-floating my-4" id="parrain_confirmation_annee">
-                      <input id="parrain_confirmation_annee" type="text" class="form-control">
-                      <label for="parrain_confirmation_annee">Année de confirmation</label>
-                    </div>
-
-                    <input id="parrain_confirmation_doc" class="my-4" type="file" name="parrain_confirmation_doc" accept="image/*, application/pdf">
-                  </div>
-
-                </div>
-              </div>
               
+
 
               <h3 class="display-5 mt-8 mb-4">Date de baptême</h3>
 
-              <div class="form-select-wrapper mb-4">
-                <select class="form-select" aria-label="Choisir une date" id="disponibilite_bapteme">
-                  <option selected>Choisir une date</option>
-                  @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
-                </select>
+              <div class="row mb-4">
+                <div class="col-lg-6">
+                  <div class="form-select-wrapper mb-4">
+                    <select class="form-select" aria-label="Choisir une date" id="date_bapteme" required>
+                      @@loop('_option_date.html', "../temp/disponibilites_bapteme.json")
+                    </select>
+                  </div>
+                </div>
               </div>
 
               <h3 class="display-5 mt-8 mb-4">Date de catéchèse</h3>
@@ -163,17 +183,25 @@
                 <p>Si vous étiez dans l’incapacité de participer à la rencontre, nous déplacerons la date du baptême afin de vous permettre de vivre la catéchèse avant le baptême. Comme le baptême est l’entrée dans une famille, il nous semble bon de prendre un temps ensemble afin de faire connaissance, de part et
                 d’autre, comme membre de la même famille chrétienne.</p>
 
-              <div class="form-floating mb-4">
-                <div class="form-select-wrapper mb-4">
-                  <select id="disponibilite_catechese_bapteme" class="form-select" aria-label="Choisir une date">
-                    <option selected>Choisir une date</option>
-                    @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
-                  </select>
+
+              <div class="row mb-4">
+                <div class="col-lg-6">
+                  <div class="form-floating mb-4">
+                    <div class="form-select-wrapper mb-4">
+                      <select id="date_catechese" class="form-select" aria-label="Choisir une date" required>
+                        @@loop('_option_date.html', "../temp/disponibilite_catechese_bapteme.json")
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-floating mb-4">
+                    <input id="input_courriel" type="email" class="form-control" required>
+                    <label for="input_courriel">Addresse courriel</label>
+                  </div>
                 </div>
               </div>
 
-              <input type="submit" class="btn btn-primary my-4" value="Continuer" disabled>
-            
+              <input id="btn_submit" type="submit" class="btn btn-primary my-4" value="Continuer" disabled>
             </form>
 
           </div>
@@ -191,47 +219,5 @@
 	@@include('_scripts.html')
 
   <script src="https://www.google.com/recaptcha/api.js?render=6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL"></script>
-
-  <script>
-    let datesCatechese
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const baptemeEl = document.getElementById('disponibilite_bapteme');
-      const catecheseEl = document.getElementById('disponibilite_catechese_bapteme');
-      datesCatechese = [...catecheseEl.options].slice(1).map(o => ({ value: o.value, label: o.label }))
-      console.log('baptemeEl', baptemeEl)
-      console.log('datesCatechese', datesCatechese)
-
-      baptemeEl.addEventListener('change', onChange)
-    })
-
-    function onChange(e) {
-      const baptemeDate = new Date(e.target.value);
-      const catecheseEl = document.getElementById('disponibilite_catechese_bapteme');
-
-      [...catecheseEl.options].forEach((_, index) => {
-        console.log(index)
-        catecheseEl.remove(1);
-      })
-
-      datesCatechese.forEach((item, index) => {
-        const catecheseDate = new Date(item.value)
-        if (catecheseDate < baptemeDate) {
-          console.log(catecheseDate)
-          catecheseEl.add(new Option(item.label, item.value))
-        }
-      })
-    }
-
-    function onClick(e) {
-      e.preventDefault();
-      grecaptcha.ready(function() {
-        grecaptcha.execute('6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL', {action: 'submit'}).then(function(token) {
-            // Add your logic to submit to your backend server here.
-            fetch('localhost:9000/')
-        });
-      });
-    }
-  </script>
 </body>
 </html>
