@@ -1,6 +1,7 @@
 // const CAPTCHA_ID = '6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL'; //prod
 const CAPTCHA_ID = '6LdHkawlAAAAAP569ASlKi_UJ_aBC8aSCW_af1lN'; // dev
-const API_URL = 'http://localhost:9000/2015-03-31/functions/function/invocations';
+const API_URL = 'http://cors-anywhere.herokuapp.com/localhost:9000/2015-03-31/functions/function/invocations';
+const NODE_ENV = 'dev'
 
 const els = {};
 const state = {
@@ -32,15 +33,22 @@ document.addEventListener('DOMContentLoaded', () => {
     'date_catechese',
     // bouton d'envoi
     'input_courriel',
-    'btn_submit'
+    'btn_submit',
+    // messages
+    'output-box',
+    'output-text'
   ])
 
   state.datesCatechese = [...els['date_catechese'].options]
-    .map(o => ({ value: o.value, label: o.label }))
+    .map(o => ({ 
+      value: o.value, 
+      label: o.label,
+      dateId: o.dataset.dateId
+    }))
 
   // Mise à jour des dates de catéchese
   els['date_bapteme'].addEventListener('change', updateDropdownDatesCatechese)
-  els['form_bapteme_1'].addEventListener('submit', onSubmit)
+  els['btn_submit'].addEventListener('click', onSubmit)
 
   // Validation à chaque changement
   Object.values(els)
@@ -67,8 +75,9 @@ function updateDropdownDatesCatechese() {
   state.datesCatechese.forEach((item) => {
     const dateCatechese = new Date(item.value);
     if (dateCatechese < dateBapteme) {
-      console.log(dateCatechese)
-      catecheseEl.add(new Option(item.label, item.value));
+      const optionEl = new Option(item.label, item.value);
+      optionEl.dataset.dateId = item.dateId;
+      catecheseEl.add(optionEl);
     }
   });
 
@@ -87,8 +96,8 @@ function validateForm () {
 
   console.log('Form is valid:', formIsValid)
 
-  // els['btn_submit'].disabled = !formIsValid;
-  els['btn_submit'].disabled = false;
+  els['btn_submit'].disabled = !formIsValid;
+  // els['btn_submit'].disabled = false;
 }
 
 function certIsValid() {
@@ -136,52 +145,119 @@ function validateYear (str) {
 function onSubmit (e) {
   e.preventDefault();
 
+  els['btn_submit'].disabled = true;
+  els['btn_submit'].classList.add('loading');
+
   grecaptcha.ready(() => 
     grecaptcha.execute(CAPTCHA_ID, { action: 'submit' }).then(callApi)
   );
 }
 
+function stopLoading () {
+  els['btn_submit'].disabled = false;
+  els['btn_submit'].classList.remove('loading');
+}
+
 async function callApi(token) {
-  // TODO: add a spinner on the button
+  const docEnfant = els['doc_enfant'].files[0]
+  const docParrain = els['doc_parrain'].files[0]
+  const docMarraine = els['doc_marraine'].files[0]
+
+  const body = {
+    command: 'create_inscription_bapteme',
+    args: {
+      token: token,
+      courriel: els['input_courriel'].value,
+      format_enfant: getFileType(docEnfant),
+      date_bapteme: els['date_bapteme'].selectedOptions[0].dataset.dateId,
+      date_catechese: els['date_catechese'].selectedOptions[0].dataset.dateId,
+      parrain_annee: els['input_parrain_annee'].value,
+      marraine_annee: els['input_marraine_annee'].value,
+      format_parrain: docParrain ? getFileType(docParrain) : undefined,
+      format_marraine: docMarraine ? getFileType(docParrain) : undefined,
+    }
+  };
 
   const config = {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      command: 'create_inscription_bapteme',
-      args: {
-        token: token,
-        courriel: els['input_courriel'].value,
-        date_bapteme: els['date_bapteme'].value,
-        date_catechese: els['date_catechese'].value,
-        parrain_annee: els['input_parrain_annee'].value || null,
-        marraine_annee: els['input_marraine_annee'].value || null
-      }
-    })
+    body: JSON.stringify(body)
   }
 
-  console.log(API_URL, config)
+  console.log(API_URL, body);
 
-  fetch(API_URL, config).then(res => {
-    console.log('done!')
-  })
+  output('Création de l\'inscription...')
+
+  let data
+  try {
+    data = await fetch(API_URL, config).then(res => res.json())
+  } catch (err) {
+    console.error(err)
+    output('Erreur lors de la création de l\'inscription.')
+    stopLoading()
+    return 
+  }
+  
+  output('Envoi du certificat de naissance...')
+  
+  try {
+    await uploadFile(data.upload_urls.enfant, docEnfant);
+
+  } catch (err) {
+    console.error(err)
+    output('Erreur lors de l\'envoi du certificat de naissance.')
+    stopLoading()
+    return 
+  }
+
+  if (data.upload_urls.marraine) {
+    try {
+      output('Envoi du certificat de confirmation de la marraine...')
+      await uploadFile(data.upload_urls.marraine, docMarraine);
+    } catch (err) {
+      console.error(err)
+      output('Erreur lors de l\'envoi du certificat de confirmation de la marraine.')
+      stopLoading()
+      return 
+    }
+  }
+
+  if (data.upload_urls.parrain) {
+    try {
+      output('Envoi du certificat de confirmation du parrain...')
+      await uploadFile(data.upload_urls.parrain, docParrain);
+    } catch (err) {
+      console.error(err)
+      output('Erreur lors de l\'envoi du certificat de confirmation du parrain.')
+      stopLoading()
+      return 
+    }
+  }
+
+  console.log('Done!')
+  output('Succès!')
 }
 
-async function loadFile (f) {
-  const reader = new FileReader();
+function output (text) {
+  els['output-box'].classList.remove('hidden');
+  els['output-text'].innerText = text;
+}
 
-  return new Promise((resolve, reject) => {
-    reader.onload = (e) => {
-      // const b64String = btoa(String.fromCharCode(...new Uint8Array(e.target.result)));
-      resolve(e.target.result)
-    };
+function getFileType(file) {
+  return file ? file.type.split('/')[1] : null
+}
 
-    reader.onerror = (e) => {
-      reject(e.message)
-    }
+function uploadFile (url, file) {
+  const formData = new FormData();
+  formData.append(url, file);
 
-    reader.readAsArrayBuffer(f);
-  })
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    body: formData
+  });
 }
