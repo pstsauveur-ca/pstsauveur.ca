@@ -1,4 +1,6 @@
-const CAPTCHA_ID = '6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL';
+// const CAPTCHA_ID = '6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL'; //prod
+const CAPTCHA_ID = '6LdHkawlAAAAAP569ASlKi_UJ_aBC8aSCW_af1lN'; // dev
+const API_URL = 'http://localhost:9000/2015-03-31/functions/function/invocations';
 
 const els = {};
 const state = {
@@ -85,7 +87,8 @@ function validateForm () {
 
   console.log('Form is valid:', formIsValid)
 
-  els['btn_submit'].disabled = !formIsValid;
+  // els['btn_submit'].disabled = !formIsValid;
+  els['btn_submit'].disabled = false;
 }
 
 function certIsValid() {
@@ -115,12 +118,10 @@ function parrainIsValid() {
 }
 
 function hasSelectedDates () {
-  const has = (
+  return (
     els['date_bapteme'].checkValidity() && 
     els['date_catechese'].checkValidity()
   )
-  console.log('has selected dates', has)
-  return has
 }
 
 function emailIsValid () {
@@ -129,49 +130,43 @@ function emailIsValid () {
 
 function validateYear (str) {
   const isValid = /^(19|20)\d{2}$/.test(str);
-  console.log('year', str, isValid);
   return isValid;
 }
 
 function onSubmit (e) {
   e.preventDefault();
 
-  grecaptcha.ready(function() {
-    grecaptcha.execute(CAPTCHA_ID, { action: 'submit' }).then(callApi);
-  });
+  grecaptcha.ready(() => 
+    grecaptcha.execute(CAPTCHA_ID, { action: 'submit' }).then(callApi)
+  );
 }
 
 async function callApi(token) {
   // TODO: add a spinner on the button
 
-  console.log(els['doc_enfant'].files)
-
   const config = {
-    url: 'http://localhost:9000/2015-03-31/functions/function/invocations',
-    body: {
-      token: token,
-      courriel: '',
-      date_bapteme: els['date_bapteme'].value,
-      date_catechese: els['date_catechese'].value,
-      enfant: {
-        doc: await loadFile(els['doc_enfant'].files)
-      },
-      parrain: {
-        doc: await loadFile(els['doc_parrain'].files),
-        annee: els['input_parrain_annee'].value || null
-      },
-      marraine: {
-        doc: await loadFile(els['doc_marraine'].files),
-        annee: els['input_marraine_annee'].value || null
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      command: 'create_inscription_bapteme',
+      args: {
+        token: token,
+        courriel: els['input_courriel'].value,
+        date_bapteme: els['date_bapteme'].value,
+        date_catechese: els['date_catechese'].value,
+        parrain_annee: els['input_parrain_annee'].value || null,
+        marraine_annee: els['input_marraine_annee'].value || null
       }
-    }
+    })
   }
 
-  console.log(config)
+  console.log(API_URL, config)
 
-  // fetch(config).then(res => {
-  //   console.log('done!')
-  // })
+  fetch(API_URL, config).then(res => {
+    console.log('done!')
+  })
 }
 
 async function loadFile (f) {
