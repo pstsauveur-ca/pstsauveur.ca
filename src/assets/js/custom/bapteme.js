@@ -1,6 +1,6 @@
 // const CAPTCHA_ID = '6LcA5lElAAAAAPY5DzY8XB48DTnPn5R1q1zEpjmL'; //prod
 const CAPTCHA_ID = '6LdHkawlAAAAAP569ASlKi_UJ_aBC8aSCW_af1lN'; // dev
-const API_URL = 'http://cors-anywhere.herokuapp.com/localhost:9000/2015-03-31/functions/function/invocations';
+const API_URL = 'http://localhost:9000/2015-03-31/functions/function/invocations';
 const NODE_ENV = 'dev'
 
 const els = {};

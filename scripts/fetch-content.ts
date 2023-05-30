@@ -1,8 +1,12 @@
 import { writeFile } from 'fs/promises';
 import path from 'path';
 
-const STRAPI_URL = 'https://cms.pstsauveur.ca';
-const STRAPI_TOKEN = process.env.STRAPI_TOKEN || '';
+const DIRECTUS_URL = 'https://cms.pstsauveur.ca';
+const { DIRECTUS_TOKEN } = process.env;
+
+if (!DIRECTUS_TOKEN) {
+  throw new Error('DIRECTUS_TOKEN missing');
+}
 
 interface ICMSContent {
   annonces: {
@@ -28,11 +32,11 @@ interface ICMSContent {
 }());
 
 async function fetchResources(type: string) {
-  const { data } = await fetch(`${STRAPI_URL}/api/${type}`, {
+  const { data } = await fetch(`${DIRECTUS_URL}/api/${type}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${STRAPI_TOKEN}`,
+      Authorization: `Bearer ${DIRECTUS_TOKEN}`,
     },
   }).then((response) => response.json());
 
