@@ -4,6 +4,10 @@ const path = require('path');
 
 const directus = new Directus('https://cms.pstsauveur.ca');
 
+if (!process.env.DIRECTUS_TOKEN) {
+  throw new Error('Missing process.env.DIRECTUS_TOKEN');
+}
+
 async function start() {
   await mkdir(path.join(__dirname, '../temp'), { recursive: true })
 
@@ -51,6 +55,7 @@ async function fetchAndSaveEvents (directus) {
         title: "${event.titre}",
         category: "Évènements",
         date: "${event.formattedDate}",
+        image: "${event.image}",
         text: "@@include(markdown('../../temp/evenements/${year}/${month}/${event.id}.md'))"
       })`, 'utf8')
     await writeFile(`${filepath}.md`, event.contenu || '', 'utf8')

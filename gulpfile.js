@@ -29,6 +29,7 @@ var path = {
     partials: 'src/partials/',
     js: 'src/assets/js/',
     vendorjs: 'src/assets/js/vendor/*.*',
+    customjs: 'src/assets/js/custom/*.*',
     themejs: 'src/assets/js/theme.js',
     style: 'src/assets/scss/style.scss',
     fontcss: 'src/assets/scss/fonts/*.*',
@@ -44,6 +45,7 @@ var path = {
     partials: 'src/partials/**/*.*',
     themejs: 'src/assets/js/theme.js',
     vendorjs: 'src/assets/js/vendor/*.*',
+    customjs: 'src/assets/js/custom/*.*',
     css: ['src/assets/scss/**/*.scss', '!src/assets/scss/fonts/*.scss', '!src/assets/scss/colors/*.scss', '!src/assets/scss/theme/_colors.scss'],
     fontcss: 'src/assets/scss/fonts/*.scss',
     colorcss: ['src/assets/scss/colors/*.scss', 'src/assets/scss/theme/_colors.scss'],
@@ -266,7 +268,8 @@ gulp.task('vendorcss:dist', function () {
 gulp.task('pluginsjs:dev', function () {
   return gulp.src([
     'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-    path.src.vendorjs
+    path.src.vendorjs,
+    path.src.customjs
   ])
     .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
@@ -276,7 +279,8 @@ gulp.task('pluginsjs:dev', function () {
 gulp.task('pluginsjs:dist', function () {
   return gulp.src([
     'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-    path.src.vendorjs
+    path.src.vendorjs,
+    path.src.customjs
   ])
     .pipe(jsImport({ hideConsole: true }))
     .pipe(concat('plugins.js'))
@@ -405,6 +409,7 @@ gulp.task('watch', function () {
   gulp.watch(path.watch.colorcss, gulp.series('colorcss:dist'));
   gulp.watch(path.watch.vendorcss, gulp.series('vendorcss:dist'));
   gulp.watch(path.watch.vendorjs, gulp.series('pluginsjs:dist'));
+  gulp.watch(path.watch.customjs, gulp.series('pluginsjs:dist'));
   gulp.watch(path.watch.themejs, gulp.series('themejs:dist'));
   gulp.watch(path.watch.img, gulp.series('image:dist'));
   gulp.watch(path.watch.fonts, gulp.series('fonts:dist'));
